@@ -13,7 +13,7 @@ app.set('views','./views')
 app.get('/',(req,res) => {
     res.render('index',
         {
-            title:"Home Page"
+            title:"Home Page of the main page"
         }
     )
 })
