@@ -1,62 +1,25 @@
-const express = require('express')
-const app =express()
+const express = require('express');
+const mongoose = require('mongoose');
+//const Product = require('./models/product');             
+
+const app = express();
+
+app.use(express.json());
+
+mongoose.connect('mongodb+srv://srishayi04:sn6pQ5fYtUe6ZRmG@cluster2.10w1hnw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster2')
+
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+const productRoutes = require('./routes/product');
+app.use('/product', productRoutes);
 
 
-
-
-const productRoutes = require('./routes/product')
-const logger = require ('./middleware/logger') 
-
-app.set('view engine','ejs')
-app.set('views','./views')
-
-app.get('/',(req,res) => {
-    res.render('index',
-        {
-            title:"Home Page of the main page"
-        }
-    )
-})
-app.get('/about',(req,res) => {
-    res.render('index',
-        {
-            title:"About Page"
-        }
-    )
-})
-
-
-app.get('/user/:id',(req,res) => {
-        const userId = req.params.id;
-
-    users=[
-        {},
-         {}, 
-         {},
-          {},
-           {},
-    ]
-    const userDetails = u
-       res.render('index',
-        {
-            title:"About Page"
-        }
-    )
-
-})
-
-app.use(express.json())
-
-app.use('/product',logger,productRoutes)
-app.use(express.static('public'))
 
 app.use((req,res) => {
 res.status(404).send('No page found')
 })
 
-
-
-
-app.listen(8080), ()=>{
-    console.log('server started')
- } 
+app.listen(8080, () => {
+  console.log('Server started on http://localhost:8080');
+});
